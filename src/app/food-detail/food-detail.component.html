@@ -1,0 +1,7 @@
+<h2>🍲 Food Detail</h2>
+<div *ngIf="foodItem">
+  <p>Name: {{ foodItem.name }}</p>
+  <p>Price: ₹{{ foodItem.price }}</p>
+  <p>Category: {{ foodItem.category }}</p>
+</div>
+<a routerLink="/">⬅ Back to list</a>

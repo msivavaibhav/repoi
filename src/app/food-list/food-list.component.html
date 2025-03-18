@@ -1,0 +1,13 @@
+<h2>🍽 Food List</h2>
+
+<!-- Two-way binding for search input -->
+<input type="text" [(ngModel)]="searchTerm" placeholder="Search food..." />
+
+<!-- Display the content typed in the input (showing live updates) -->
+<p>You are typing: {{ searchTerm }}</p>
+
+<ul>
+  <li *ngFor="let food of filteredFoodItems">
+    {{ food.name }} - ₹{{ food.price }} ({{ food.category }})
+  </li>
+</ul>
