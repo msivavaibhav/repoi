@@ -1,12 +1,15 @@
 <h2>🍽 Food List</h2>
 
-<!-- Two-way binding for search input -->
 <input type="text" [(ngModel)]="searchTerm" placeholder="Search food..." />
 
-<!-- Display the content typed in the input (showing live updates) -->
+<!-- ✅ Display typed content (Two-way binding) -->
 <p>You are typing: {{ searchTerm }}</p>
 
-<ul>
+<!-- ✅ Show loading message while waiting for promise -->
+<div *ngIf="isLoading">Loading food items, please wait...</div>
+<!-- Check for the changes to see in git-->
+<!-- ✅ Display filtered food list -->
+<ul *ngIf="!isLoading">
   <li *ngFor="let food of filteredFoodItems">
     {{ food.name }} - ₹{{ food.price }} ({{ food.category }})
   </li>
