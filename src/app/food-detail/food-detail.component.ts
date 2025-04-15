@@ -16,9 +16,11 @@ export class FoodDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private foodService: FoodService) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.foodId = Number(this.route.snapshot.paramMap.get('id'));
-    const foods = this.foodService.getLocalFoods();
-    this.foodItem = foods.find(f => f.id === this.foodId);
+    const foods = await this.foodService.getFoodsPromise();
+
+    this.foodItem = foods.find((f: any) => f.id === this.foodId);
+
   }
 }

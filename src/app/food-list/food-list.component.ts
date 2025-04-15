@@ -1,7 +1,9 @@
+// src/app/food-list/food-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { FoodService } from '../food.service';
 
 @Component({
   selector: 'app-food-list',
@@ -12,17 +14,34 @@ import { FormsModule } from '@angular/forms';
 })
 export class FoodListComponent implements OnInit {
   searchTerm: string = ''; // Two-way bound to input field
-  foodItems = [
-    { id: 1, name: 'Pizza', price: 250, category: 'Italian' },
-    { id: 2, name: 'Burger', price: 150, category: 'American' },
-    { id: 3, name: 'Biryani', price: 200, category: 'Indian' }
-  ];
+  foodItems: any[] = [];   // Stores food list from service
+  isLoading: boolean = true;
 
-  ngOnInit() {}
+  constructor(private foodService: FoodService) {}
 
-  // Filtered food items based on the search term
+  ngOnInit(): void {
+    this.loadFoods(); // Load foods using async/await
+  }
+
+  // ✅ Using async/await to fetch data from Promise
+  async loadFoods() {
+    try {
+      // Show loading indicator
+      this.isLoading = true;
+
+      // Wait for Promise to resolve from service
+      this.foodItems = await this.foodService.getFoodsPromise();
+
+      // Hide loading indicator
+      this.isLoading = false;
+    } catch (error) {
+      console.error('Error loading foods:', error);
+    }
+  }
+
+  // Filtered food items based on search term
   get filteredFoodItems() {
-    return this.foodItems.filter(item => 
+    return this.foodItems.filter(item =>
       item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
